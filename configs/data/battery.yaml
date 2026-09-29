@@ -1,0 +1,12 @@
+path: datasets/battery
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: scratch
+  1: pinhole
+  2: dent
+  3: stain
+  4: foreign_object
+  5: crack

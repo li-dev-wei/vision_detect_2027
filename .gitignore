@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+.validation/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local datasets and model artifacts
+/datasets/
+/data/
+/runs/
+/weights/
+*.pt
+*.onnx
+*.engine
+*.torchscript
+
+# Experiment trackers
+wandb/
+mlruns/
