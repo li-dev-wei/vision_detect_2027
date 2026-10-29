@@ -1,0 +1,27 @@
+path: datasets/new_energy_rgb
+train: images/train
+val: images/val
+test: images/test
+
+# RGB-only classes from the defect-summary table. The PV module encapsulation
+# anomaly row is excluded; PV cell defects remain included.
+names:
+  0: electrode_surface_crack
+  1: electrode_coating_peel
+  2: electrode_pinhole
+  3: electrode_wrinkle
+  4: pouch_film_damage
+  5: pouch_film_pinhole
+  6: pouch_film_swelling
+  7: pouch_film_scratch
+  8: tab_crack
+  9: tab_pinhole
+  10: tab_edge_chipping
+  11: pv_cell_crack
+  12: pv_cell_scratch
+  13: pv_cell_broken_finger
+  14: pv_cell_damage
+  15: nickel_foam_crack
+  16: nickel_foam_abnormal_pore
+  17: nickel_foam_edge_chipping
+  18: nickel_foam_local_collapse
