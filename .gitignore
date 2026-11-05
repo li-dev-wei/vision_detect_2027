@@ -17,6 +17,7 @@ Thumbs.db
 /datasets/
 /dataset/
 /data/
+/资料/
 /runs/
 /weights/
 *.pt
