@@ -4,6 +4,7 @@ import ctypes.util
 import importlib
 from importlib import metadata
 import platform
+from pathlib import Path
 import sys
 
 
@@ -26,15 +27,28 @@ def main() -> int:
         print(f"lib{library}: {ctypes.util.find_library(library) or 'not found'}")
 
     failures = []
+    ultralytics_module = None
     for module_name in ("torch", "ultralytics", "yaml", "PIL"):
         try:
             module = importlib.import_module(module_name)
             print(f"import {module_name}: OK")
             if module_name == "torch":
                 print(f"CUDA available: {module.cuda.is_available()}")
+            elif module_name == "ultralytics":
+                ultralytics_module = module
         except Exception as error:
             failures.append(module_name)
             print(f"import {module_name}: FAILED ({type(error).__name__}: {error})")
+
+    if ultralytics_module is not None:
+        package_root = Path(ultralytics_module.__file__).resolve().parent
+        yolo26_configs = sorted(package_root.glob("cfg/models/**/yolo26*.yaml"))
+        if yolo26_configs:
+            print(f"YOLO26 package support: OK ({len(yolo26_configs)} config file(s))")
+        else:
+            failures.append("ultralytics-yolo26")
+            print("YOLO26 package support: NOT AVAILABLE")
+            print("Install an official Ultralytics release that includes YOLO26 before training.")
 
     if failures:
         print("Environment is not ready for model training.")

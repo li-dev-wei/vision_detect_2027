@@ -14,6 +14,8 @@ from PIL import Image, UnidentifiedImageError
 
 IMAGE_SUFFIXES = {".bmp", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"}
 SIZE_THRESHOLDS = (4, 8, 16, 32)
+COCO_SMALL_AREA = 32**2
+COCO_MEDIUM_AREA = 96**2
 
 
 @dataclass
@@ -53,6 +55,8 @@ def load_dataset_config(data_path: Path) -> tuple[Path, dict, dict[int, str]]:
         names = {int(index): str(name) for index, name in raw_names.items()}
     else:
         raise ValueError("The 'names' field must be a list or mapping.")
+    if sorted(names) != list(range(len(names))):
+        raise ValueError("Class IDs in 'names' must be contiguous and start at 0.")
     return dataset_root, config, names
 
 
@@ -143,9 +147,16 @@ def parse_label_file(
         resized_width = coordinates[2] * image_width * resize_scale
         resized_height = coordinates[3] * image_height * resize_scale
         short_side = min(resized_width, resized_height)
+        resized_area = resized_width * resized_height
         for threshold in SIZE_THRESHOLDS:
             if short_side < threshold:
                 resized_sizes[f"short_side_lt_{threshold}px"] += 1
+        if resized_area < COCO_SMALL_AREA:
+            resized_sizes["coco_small_area_lt_32sq"] += 1
+        elif resized_area < COCO_MEDIUM_AREA:
+            resized_sizes["coco_medium_area_32sq_to_96sq"] += 1
+        else:
+            resized_sizes["coco_large_area_ge_96sq"] += 1
         resized_sizes["total"] += 1
         classes[class_id] += 1
         instances += 1

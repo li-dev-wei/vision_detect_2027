@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate a YOLO11 checkpoint on a fixed split.")
+    parser = argparse.ArgumentParser(description="Evaluate a YOLO26n checkpoint on a fixed split.")
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--split", choices=("val", "test"), default="test")
@@ -28,7 +28,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    from models.dmare import DMARE  # noqa: F401 - required when loading custom-layer checkpoints
+    from models.ultralytics_plugins import register_dmare
+
+    register_dmare()
     from ultralytics import YOLO
 
     model_path = args.model.resolve()
