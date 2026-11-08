@@ -27,7 +27,7 @@ python scripts/prepare_coatingvision_pretrain.py
 ```bash
 python scripts/train_baseline.py \
   --data dataset/CoatingVision/pretrain_pinhole/data.yaml \
-  --model yolo11n.pt \
+  --model yolo26n.pt \
   --imgsz 640 \
   --epochs 100 \
   --patience 20 \
@@ -35,11 +35,11 @@ python scripts/train_baseline.py \
   --workers 2 \
   --device 0 \
   --project runs/coatingvision-pretrain \
-  --name yolo11n_pinhole_rgb
+  --name yolo26n_pinhole_rgb
 ```
 
-这是迁移学习候选初始化，不是最终指标实验。CoatingVision 子集较小，应把 COCO 初始化和该预训练初始化作为平行方案，在同一 19 类目标数据集上微调比较；最终只根据冻结测试集的结果判断是否保留。
+这是迁移学习候选初始化，不是最终指标实验。CoatingVision 子集较小，应把 COCO 初始化和该预训练初始化作为平行方案，在同一 18 类目标数据集上微调比较；最终只根据冻结测试集的结果判断是否保留。
 
-## 迁移到 19 类模型
+## 迁移到 18 类模型
 
-对基线可用 `--model yolo11n.pt --pretrained runs/coatingvision-pretrain/yolo11n_pinhole_rgb/weights/best.pt`。对 P2/DMARE 配置，将 `--model` 指向对应 YAML，`--pretrained` 仍指向该预训练权重。不同类别数导致检测头部分参数无法匹配，这是预期行为；骨干和形状匹配的层会用于初始化。
+对基线可用 `--model yolo26n.pt --pretrained runs/coatingvision-pretrain/yolo26n_pinhole_rgb/weights/best.pt`。对 P2/DMARE 配置，将 `--model` 指向对应 YAML，`--pretrained` 仍指向该预训练权重。不同类别数或新增模块导致部分参数无法匹配，这是预期行为；骨干和形状匹配的层会用于初始化。

@@ -1,10 +1,11 @@
-path: datasets/new_energy_rgb
+path: dataset/new_energy_rgb
 train: images/train
 val: images/val
 test: images/test
 
-# RGB-only classes from the defect-summary table. The PV module encapsulation
-# anomaly row is excluded; PV cell defects remain included.
+# The proposal fixes the study scope at 18 RGB defect classes. The PV module
+# encapsulation anomaly and nickel-foam local collapse rows from the source
+# summary are outside this version of the dataset.
 names:
   0: electrode_surface_crack
   1: electrode_coating_peel
@@ -24,4 +25,3 @@ names:
   15: nickel_foam_crack
   16: nickel_foam_abnormal_pore
   17: nickel_foam_edge_chipping
-  18: nickel_foam_local_collapse

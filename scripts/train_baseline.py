@@ -10,9 +10,9 @@ if str(ROOT) not in sys.path:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train a reproducible YOLO11 battery-defect experiment.")
+    parser = argparse.ArgumentParser(description="Train a reproducible YOLO26n new-energy defect experiment.")
     parser.add_argument("--data", type=Path, required=True, help="Path to the dataset YAML file.")
-    parser.add_argument("--model", default="yolo11n.pt", help="Checkpoint or model YAML path.")
+    parser.add_argument("--model", default="yolo26n.pt", help="Checkpoint or model YAML path.")
     parser.add_argument(
         "--pretrained",
         default=None,
